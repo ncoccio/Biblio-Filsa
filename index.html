@@ -410,14 +410,15 @@ function renderQ() {
   document.getElementById('pl').textContent = `${cur+1} / ${QS.length}`;
   const wrap = document.getElementById('opts');
   wrap.innerHTML = '';
-  q.o.forEach((o, i) => {
+  const shuffled = [...q.o].sort(() => Math.random() - 0.5);
+  shuffled.forEach((o) => {
     const b = document.createElement('button');
     b.className = 'opt';
-    b.innerHTML = `<span class="ltr">${o.l}</span><span>${o.t}</span>`;
+    b.innerHTML = `<span>${o.t}</span>`;
     b.onclick = () => {
       wrap.querySelectorAll('.opt').forEach(x => x.classList.remove('sel'));
       b.classList.add('sel');
-      sel = i;
+      sel = o.p;
       document.getElementById('nbtn').disabled = false;
     };
     wrap.appendChild(b);
@@ -429,7 +430,7 @@ function renderQ() {
 
 function next() {
   if (sel === null) return;
-  ans.push(QS[cur].o[sel].p);
+  ans.push(sel);
   cur++;
   if (cur >= QS.length) showResult();
   else renderQ();
