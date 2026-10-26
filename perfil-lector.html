@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>¿Eres lector o buscador? — Bibliotecología UTEM</title>
+  <meta name="description" content="Test de perfil informacional de la Carrera de Bibliotecología y Documentación, UTEM. 5 preguntas para descubrir qué tipo de usuario de información eres.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap">
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --bg:       #FFFFFF;
+      --surface:  #FFFFFF;
+      --surface2: #F5F2EE;
+      --border:   #E0D8D0;
+      --text:     #1C1814;
+      --muted:    #7A7060;
+      --accent:   #CC5F1A;
+      --accent-lt:#E87A3A;
+      --opt-sel:  #FFF3EA;
+      color-scheme: light;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-block: 2rem;
+      padding-left:  max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      width: 100%;
+      max-width: 520px;
+      margin-bottom: 1.75rem;
+    }
+    .utem-tag {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+    .utem-box {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .utem-box svg { width: 20px; height: 20px; }
+    .utem-label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+    .utem-label strong { display: block; color: var(--text); font-size: .8rem; }
+
+    .eyebrow {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .6rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.8rem, 7vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      text-wrap: balance;
+      color: var(--text);
+    }
+    h1 em { font-style: italic; font-weight: 700; color: var(--accent-lt); }
+    .subtitle {
+      font-size: .88rem;
+      color: var(--muted);
+      margin-top: .5rem;
+      line-height: 1.5;
+    }
+    .rule {
+      width: 40px; height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin: .9rem 0;
+    }
+
+    /* ── CARD ── */
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    /* ── PROGRESS ── */
+    .prog-row { display: flex; align-items: center; gap: .7rem; }
+    .prog-bar {
+      flex: 1; height: 3px;
+      background: var(--border);
+      border-radius: 99px; overflow: hidden;
+    }
+    .prog-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      transition: width .3s ease;
+    }
+    .prog-lbl {
+      font-size: .72rem; color: var(--muted);
+      font-variant-numeric: tabular-nums; white-space: nowrap;
+    }
+
+    /* ── QUESTION ── */
+    .q-tag {
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .q-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(.95rem, 3.5vw, 1.15rem);
+      font-weight: 700; line-height: 1.3;
+      text-wrap: balance;
+    }
+    .opts { display: flex; flex-direction: column; gap: .45rem; }
+    .opt {
+      display: flex; align-items: center; gap: .65rem;
+      padding: .7rem .85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      background: var(--surface);
+      cursor: pointer;
+      text-align: left; width: 100%;
+      color: var(--text);
+      font-family: inherit; font-size: .88rem; line-height: 1.35;
+      transition: background .12s, border-color .12s;
+    }
+    .opt:hover { background: var(--surface2); border-color: var(--accent); }
+    .opt.sel   { background: var(--opt-sel); border-color: var(--accent); }
+    .opt:active { opacity: .85; }
+    .ltr {
+      flex-shrink: 0;
+      width: 1.35rem; height: 1.35rem;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem; font-weight: 700; color: var(--muted);
+      transition: background .12s, border-color .12s, color .12s;
+    }
+    .opt.sel .ltr { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      align-self: flex-end;
+      padding: .6rem 1.4rem;
+      border: none; border-radius: 6px;
+      background: var(--accent); color: #fff;
+      font-family: inherit; font-size: .9rem; font-weight: 700;
+      cursor: pointer;
+      transition: opacity .12s;
+    }
+    .btn:disabled { opacity: .3; cursor: default; }
+    .btn:not(:disabled):hover { opacity: .85; }
+    .btn-full { align-self: stretch; text-align: center; padding: .75rem; font-size: .95rem; }
+
+    /* ── INTRO ── */
+    .intro-icon { font-size: 2.4rem; text-align: center; }
+    .intro-body { font-size: .9rem; color: var(--muted); line-height: 1.6; text-align: center; }
+    .intro-chips { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .chip {
+      font-size: .75rem; color: var(--muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: .25rem .75rem;
+    }
+    .privacy-note { font-size: .75rem; color: var(--muted); text-align: center; line-height: 1.5; }
+
+    /* ── RESULT ── */
+    .res-head {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+    .res-icon { font-size: 2.2rem; line-height: 1; margin-bottom: .4rem; }
+    .res-type {
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .25rem;
+    }
+    .res-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 900;
+      line-height: 1.1; color: var(--text);
+    }
+    .res-desc { font-size: .86rem; color: var(--muted); margin-top: .45rem; line-height: 1.55; }
+    .sec-lbl {
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .pl-list { display: flex; flex-direction: column; gap: .5rem; }
+    .pl-item {
+      display: flex; gap: .65rem; align-items: flex-start;
+      padding: .7rem .85rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+    }
+    .pl-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+    .pl-name { font-weight: 700; font-size: .85rem; color: var(--text); }
+    .pl-url  { font-size: .75rem; color: var(--accent); }
+    .pl-why  { font-size: .8rem; color: var(--muted); line-height: 1.4; margin-top: .12rem; }
+    .cta {
+      background: var(--accent);
+      border-radius: 8px; padding: .9rem 1rem;
+      text-align: center; color: #fff;
+    }
+    .cta strong { font-family: 'Playfair Display', serif; font-size: 1rem; display: block; margin-bottom: .3rem; }
+    .cta p { font-size: .83rem; line-height: 1.5; opacity: .93; }
+    hr.div { height: 1px; background: var(--border); border: none; }
+    .retry {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      font-family: inherit; font-size: .82rem;
+      padding: .5rem 1.1rem; border-radius: 6px;
+      cursor: pointer; align-self: center;
+      transition: border-color .12s, color .12s;
+    }
+    .retry:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── SCREENS ── */
+    .screen { display: none; flex-direction: column; }
+    .screen.on { display: flex; }
+  </style>
+</head>
+<body>
+
+<!-- CABECERA -->
+<header class="site-header">
+  <div class="utem-tag">
+    <div class="utem-box">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="7" height="7" fill="white"/>
+        <rect x="11" y="2" width="7" height="7" fill="white" opacity=".6"/>
+        <rect x="2" y="11" width="7" height="7" fill="white" opacity=".6"/>
+        <rect x="11" y="11" width="7" height="7" fill="white" opacity=".3"/>
+      </svg>
+    </div>
+    <span class="utem-label">
+      <strong>UTEM</strong>
+      Bibliotecología y Documentación
+    </span>
+  </div>
+  <p class="eyebrow">Test de perfil informacional</p>
+  <h1>¿Eres más <em>lector</em><br>o más <em>buscador?</em></h1>
+  <div class="rule"></div>
+  <p class="subtitle">Descubre qué tipo de usuario de información eres</p>
+</header>
+
+<!-- INTRO -->
+<div class="card screen on" id="s-intro">
+  <div class="intro-icon">📖</div>
+  <p class="intro-body">5 preguntas para conocer tu perfil lector y saber qué plataformas digitales te convienen más.</p>
+  <div class="intro-chips">
+    <span class="chip">⏱ 1 minuto</span>
+    <span class="chip">5 preguntas</span>
+    <span class="chip">4 perfiles posibles</span>
+  </div>
+  <p class="privacy-note">🔒 Este test no almacena ni registra ningún dato personal. Las respuestas se procesan solo en tu dispositivo.</p>
+  <button class="btn btn-full" onclick="go('s-quiz'); renderQ()">Comenzar →</button>
+</div>
+
+<!-- QUIZ -->
+<div class="card screen" id="s-quiz" style="gap:1.1rem">
+  <div class="prog-row">
+    <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
+    <span class="prog-lbl" id="pl">1 / 5</span>
+  </div>
+  <p class="q-tag" id="qtag"></p>
+  <p class="q-text" id="qtext"></p>
+  <div class="opts" id="opts"></div>
+  <button class="btn" id="nbtn" disabled onclick="next()">Siguiente →</button>
+</div>
+
+<!-- RESULTADO -->
+<div class="card screen" id="s-res"></div>
+
+<script>
+const QS = [
+  {
+    t: "Un sábado sin planes. ¿Qué haces primero?",
+    o: [
+      { l:"A", t:"Me pierdo en un libro pendiente.", p:"V" },
+      { l:"B", t:"Busco respuesta a algo que me dejó pensando.", p:"I" },
+      { l:"C", t:"Exploro librerías o mercados buscando algo inesperado.", p:"T" },
+      { l:"D", t:"Organizo mis notas y listas de lecturas.", p:"C" }
+    ]
+  },
+  {
+    t: "Alguien te nombra un libro desconocido. ¿Qué haces?",
+    o: [
+      { l:"A", t:"Lo busco y empiezo a leerlo de inmediato.", p:"V" },
+      { l:"B", t:"Investigo al autor y el contexto antes de leer.", p:"I" },
+      { l:"C", t:"Me pregunto si existe una edición rara en algún archivo.", p:"T" },
+      { l:"D", t:"Lo anoto en mi lista, ordenado por tema.", p:"C" }
+    ]
+  },
+  {
+    t: "¿Cuál de estas situaciones te frustra más?",
+    o: [
+      { l:"A", t:"No poder leer sin interrupciones.", p:"V" },
+      { l:"B", t:"No saber qué fuente es confiable.", p:"I" },
+      { l:"C", t:"No acceder a algo que sé que existe.", p:"T" },
+      { l:"D", t:"Tener todo desordenado y no encontrar lo que ya leí.", p:"C" }
+    ]
+  },
+  {
+    t: "Si pudieras tener un superpoder informacional, ¿cuál elegirías?",
+    o: [
+      { l:"A", t:"Leer diez veces más rápido.", p:"V" },
+      { l:"B", t:"Saber al instante si algo es verdadero o falso.", p:"I" },
+      { l:"C", t:"Acceder a cualquier documento del mundo.", p:"T" },
+      { l:"D", t:"Tener la mente organizada como una base de datos.", p:"C" }
+    ]
+  },
+  {
+    t: "En una biblioteca, ¿a dónde vas primero?",
+    o: [
+      { l:"A", t:"A las novedades o los más pedidos.", p:"V" },
+      { l:"B", t:"A la sección de referencia y hemeroteca.", p:"I" },
+      { l:"C", t:"Al fondo antiguo, a ver qué hay de raro.", p:"T" },
+      { l:"D", t:"Al catálogo, para entender cómo está organizado todo.", p:"C" }
+    ]
+  }
+];
+
+const PROF = {
+  V: {
+    icon:"📚", type:"Perfil Lector", name:"El Lector Voraz",
+    desc:"Leer es tu placer y tu necesidad. Buscas acceso inmediato a textos de calidad y te adaptas bien a formatos digitales.",
+    pl:[
+      { icon:"🏛️", name:"Biblioteca Nacional Digital", url:"bnd.gob.cl", why:"Patrimonio bibliográfico chileno digitalizado, acceso gratuito." },
+      { icon:"📱", name:"Biblioteca Pública Digital", url:"bpdigital.cl", why:"Préstamo de ebooks en español con carnet de biblioteca, en cualquier dispositivo." },
+      { icon:"📖", name:"Proyecto Gutenberg", url:"gutenberg.org", why:"Más de 70.000 clásicos en EPUB para descargar sin registro." }
+    ]
+  },
+  I: {
+    icon:"🔍", type:"Perfil Investigador", name:"El Investigador Inquieto",
+    desc:"No te conformas con la superficie. Antes de concluir algo, necesitas verificar, contrastar y profundizar.",
+    pl:[
+      { icon:"🏛️", name:"Biblioteca Nacional Digital", url:"bnd.gob.cl", why:"Colecciones temáticas organizadas con criterio editorial e histórico." },
+      { icon:"📱", name:"Biblioteca Pública Digital", url:"bpdigital.cl", why:"Catálogo amplio de títulos no-ficción para explorar en profundidad." },
+      { icon:"📖", name:"Proyecto Gutenberg", url:"gutenberg.org", why:"Fuentes primarias y clásicos que forman la base de la investigación humanística." }
+    ]
+  },
+  T: {
+    icon:"🗝️", type:"Perfil Explorador", name:"El Cazador de Tesoros",
+    desc:"Lo que más te emociona es lo escondido. Tienes instinto de coleccionista y una curiosidad que te lleva a fondos poco explorados.",
+    pl:[
+      { icon:"🏛️", name:"Biblioteca Nacional Digital", url:"bnd.gob.cl", why:"Ediciones patrimoniales y documentos históricos que no encontrarás en ninguna librería." },
+      { icon:"📖", name:"Proyecto Gutenberg", url:"gutenberg.org", why:"Ediciones antiguas y textos poco conocidos disponibles como texto plano o EPUB." },
+      { icon:"📱", name:"Biblioteca Pública Digital", url:"bpdigital.cl", why:"Colecciones especiales y títulos de nicho accesibles digitalmente." }
+    ]
+  },
+  C: {
+    icon:"🗂️", type:"Perfil Curador", name:"El Curador de Saberes",
+    desc:"No solo lees: clasificas, ordenas y das acceso. Sin saberlo, ya piensas como un profesional de la información.",
+    pl:[
+      { icon:"📱", name:"Biblioteca Pública Digital", url:"bpdigital.cl", why:"Un modelo de servicio digital bien organizado, con préstamo estructurado por colecciones." },
+      { icon:"🏛️", name:"Biblioteca Nacional Digital", url:"bnd.gob.cl", why:"Ejemplo de cómo la curaduría transforma documentos en patrimonio accesible." },
+      { icon:"📖", name:"Proyecto Gutenberg", url:"gutenberg.org", why:"Miles de textos con metadatos y formatos múltiples: un ejercicio de organización de la información." }
+    ]
+  }
+};
+
+let cur = 0, ans = [], sel = null;
+
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+function renderQ() {
+  const q = QS[cur];
+  document.getElementById('qtag').textContent = `Pregunta ${cur+1} de ${QS.length}`;
+  document.getElementById('qtext').textContent = q.t;
+  document.getElementById('pf').style.width = (cur / QS.length * 100) + '%';
+  document.getElementById('pl').textContent = `${cur+1} / ${QS.length}`;
+  const wrap = document.getElementById('opts');
+  wrap.innerHTML = '';
+  q.o.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.innerHTML = `<span class="ltr">${o.l}</span><span>${o.t}</span>`;
+    b.onclick = () => {
+      wrap.querySelectorAll('.opt').forEach(x => x.classList.remove('sel'));
+      b.classList.add('sel');
+      sel = i;
+      document.getElementById('nbtn').disabled = false;
+    };
+    wrap.appendChild(b);
+  });
+  sel = null;
+  document.getElementById('nbtn').disabled = true;
+  document.getElementById('nbtn').textContent = cur < QS.length - 1 ? 'Siguiente →' : 'Ver mi perfil →';
+}
+
+function next() {
+  if (sel === null) return;
+  ans.push(QS[cur].o[sel].p);
+  cur++;
+  if (cur >= QS.length) showResult();
+  else renderQ();
+}
+
+function showResult() {
+  const t = {V:0,I:0,T:0,C:0};
+  ans.forEach(a => t[a]++);
+  const w = Object.entries(t).sort((a,b)=>b[1]-a[1])[0][0];
+  const p = PROF[w];
+  const rc = document.getElementById('s-res');
+  rc.innerHTML = `
+    <div class="res-head">
+      <div class="res-icon">${p.icon}</div>
+      <div class="res-type">${p.type}</div>
+      <div class="res-name">${p.name}</div>
+      <p class="res-desc">${p.desc}</p>
+    </div>
+    <p class="sec-lbl">Plataformas para ti</p>
+    <div class="pl-list">
+      ${p.pl.map(pl=>`
+        <div class="pl-item">
+          <span class="pl-icon">${pl.icon}</span>
+          <div>
+            <div class="pl-name">${pl.name}</div>
+            <div class="pl-url">${pl.url}</div>
+            <div class="pl-why">${pl.why}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <hr class="div">
+    <div class="cta">
+      <strong>¿Te llamó la atención cómo funciona esto?</strong>
+      <p>La carrera de Bibliotecología y Documentación de la UTEM forma a quienes organizan y dan acceso al conocimiento para que cualquier persona encuentre lo que necesita.</p>
+    </div>
+    <button class="retry" onclick="reset()">↩ Volver a intentarlo</button>
+  `;
+  go('s-res');
+}
+
+function reset() {
+  cur = 0; ans = []; sel = null;
+  go('s-quiz'); renderQ();
+}
+</script>
+
+</body>
+</html>
